@@ -5,9 +5,16 @@ export type FormState = {
   style: string;
 };
 
+export type CompleteCopy = {
+  label: string;
+  angle: string;
+  copy: string;
+};
+
 export type GeneratedResult = {
   titles: string[];
   hooks: string[];
+  completeCopies: CompleteCopy[];
   douyinScript: string;
   xiaohongshuPost: string;
   commentGuides: string[];
@@ -83,6 +90,53 @@ const takeMockItems = (templates: string[], count: number, form: FormState, seed
     .slice(0, count)
     .map((template) => replaceTokens(template, form));
 
+const buildCompleteCopies = (form: FormState) => {
+  const topic = form.topic.trim() || "短视频内容";
+
+  return [
+    {
+      label: "版本A：强钩子转化版",
+      angle: "痛点切入 + 方法拆解 + 评论私信承接",
+      copy: `标题：做${topic}一直没起色？先改这3句话
+
+开头：
+如果你正在做${topic}，但内容发出去总是没播放、没评论、没转化，先别急着怀疑自己不适合做账号。很多时候，问题不是主题不行，而是文案顺序错了。
+
+正文：
+尤其是${form.accountType}账号，用户刷到你的第一秒，不会先判断你专业不专业，而是先判断：这条内容和我有没有关系。
+
+所以第一句话不要铺垫，也不要自我介绍，直接说出用户正在经历的痛点。比如：“你是不是也发现，做${topic}最难的不是没内容，而是发出去没人愿意停下来看？”
+
+第二步，把原因说清楚。不是用户不需要，而是你把重点放在了“我想讲什么”，没有放在“用户现在最想解决什么”。
+
+第三步，给一个马上能照做的方法。下一条内容你可以按这个结构写：先点痛点，再说原因，然后给3个动作，最后用一个明确指令收口。
+
+结尾行动：
+如果你也想把${topic}做成稳定栏目，评论区打“模板”，我把标题、开头和转化话术整理给你。`,
+    },
+    {
+      label: "版本B：故事共鸣版",
+      angle: "真实场景 + 情绪共鸣 + 收藏关注沉淀",
+      copy: `标题：我后来才明白，${topic}真正打动人的不是技巧
+
+开头：
+以前我以为，做${topic}只要方法够多、内容够干，就一定会有人看。后来我发现，用户愿意停下来，往往不是因为你讲得多完整，而是因为你先说中了他的处境。
+
+正文：
+比如一个刚开始做${form.accountType}账号的人，真正焦虑的可能不是“我不会写文案”，而是“我每天都很努力发内容，但好像没有人看见”。
+
+所以更适合${form.platform}的表达，不是把所有知识点一次讲完，而是先还原一个具体场景：什么时候会卡住、为什么会怀疑自己、最容易踩进哪个坑。
+
+当用户觉得“这不就是我吗”，他才会继续听你后面的建议。
+
+接着你再给方法，内容就不会显得生硬。可以这样写：先选一个最常见的问题，只解决一个小痛点；标题不要追求大而全，要让人知道看完能得到什么；结尾不要只说关注我，而是给用户一个收藏、评论或私信的理由。
+
+结尾行动：
+这篇适合先收藏。下次你写${topic}文案前，先问自己一句：我有没有先说中用户的真实处境？如果你想看我继续拆具体案例，可以留言“案例”。`,
+    },
+  ];
+};
+
 export const generateMockResult = (form: FormState, seed: number): GeneratedResult => {
   const topic = form.topic.trim() || "短视频内容";
   const angle = form.style === "专业可信" ? "用清晰结构降低理解成本" : "先抓情绪，再给方法";
@@ -91,6 +145,7 @@ export const generateMockResult = (form: FormState, seed: number): GeneratedResu
   return {
     titles: takeMockItems(titleTemplates, 10, form, seed),
     hooks: takeMockItems(hookTemplates, 10, form, seed + 3),
+    completeCopies: buildCompleteCopies(form),
     douyinScript: `你是不是也发现，做${topic}最难的不是没内容，而是发出去之后没人愿意停下来看？
 
 其实爆款文案不是堆金句，而是把用户此刻最在意的问题先说出来。
