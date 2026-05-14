@@ -36,6 +36,11 @@ const formatSection = (title: string, content: string[] | string) => {
   return `${title}\n${content}`;
 };
 
+const formatCompleteCopies = (items: GeneratedResult["completeCopies"]) =>
+  `完整文案对比\n${items
+    .map((item, index) => `版本${index + 1}：${item.label}\n角度：${item.angle}\n\n${item.copy}`)
+    .join("\n\n")}`;
+
 const copyText = async (text: string) => {
   await navigator.clipboard.writeText(text);
 };
@@ -105,17 +110,60 @@ function ListSection({
   );
 }
 
+function CompleteCopySection({
+  icon,
+  title,
+  items,
+}: {
+  icon: React.ReactNode;
+  title: string;
+  items: GeneratedResult["completeCopies"];
+}) {
+  return (
+    <section className="result-panel wide-panel">
+      <div className="section-heading">
+        <div className="title-row">
+          {icon}
+          <h2>{title}</h2>
+        </div>
+        <CopyButton text={formatCompleteCopies(items)} label="复制两版" />
+      </div>
+      <div className="comparison-grid">
+        {items.map((item, index) => (
+          <article className="comparison-card" key={`${item.label}-${index}`}>
+            <div className="comparison-head">
+              <span className="version-badge">{index === 0 ? "A" : "B"}</span>
+              <div>
+                <h3>{item.label}</h3>
+                <p>{item.angle}</p>
+              </div>
+            </div>
+            <div className="long-copy comparison-copy">
+              {item.copy.split("\n").map((line, lineIndex) => (
+                <p key={`${item.label}-${lineIndex}`}>{line || "\u00A0"}</p>
+              ))}
+            </div>
+            <CopyButton text={`${item.label}\n角度：${item.angle}\n\n${item.copy}`} label="复制此版" />
+          </article>
+        ))}
+      </div>
+    </section>
+  );
+}
+
 function TextSection({
   icon,
   title,
   text,
+  wide = false,
 }: {
   icon: React.ReactNode;
   title: string;
   text: string;
+  wide?: boolean;
 }) {
   return (
-    <section className="result-panel">
+    <section className={wide ? "result-panel wide-panel" : "result-panel"}>
       <div className="section-heading">
         <div className="title-row">
           {icon}
@@ -185,6 +233,7 @@ export default function App() {
   const copyAllText = [
     formatSection("爆款标题", result.titles),
     formatSection("开头钩子", result.hooks),
+    formatCompleteCopies(result.completeCopies),
     formatSection("抖音口播文案", result.douyinScript),
     formatSection("小红书图文文案", result.xiaohongshuPost),
     formatSection("评论区引导话术", result.commentGuides),
@@ -266,7 +315,7 @@ export default function App() {
         <div className="workspace-topbar">
           <div>
             <p className="eyebrow">Generated Output</p>
-            <h2>已生成 32 条内容资产</h2>
+            <h2>已生成 34 条内容资产</h2>
           </div>
           <div className="status-pill">
             <Wand2 size={16} />
@@ -284,8 +333,9 @@ export default function App() {
         <div className="results-grid">
           <ListSection icon={<PenLine size={20} />} title="爆款标题" items={result.titles} />
           <ListSection icon={<Sparkles size={20} />} title="开头钩子" items={result.hooks} />
-          <TextSection icon={<Clipboard size={20} />} title="抖音口播文案" text={result.douyinScript} />
-          <TextSection icon={<Clipboard size={20} />} title="小红书图文文案" text={result.xiaohongshuPost} />
+          <CompleteCopySection icon={<Clipboard size={20} />} title="完整文案 A/B 对比" items={result.completeCopies} />
+          <TextSection icon={<Clipboard size={20} />} title="抖音口播文案" text={result.douyinScript} wide />
+          <TextSection icon={<Clipboard size={20} />} title="小红书图文文案" text={result.xiaohongshuPost} wide />
           <ListSection icon={<MessageCircle size={20} />} title="评论区引导话术" items={result.commentGuides} />
           <ListSection icon={<Send size={20} />} title="私信转化话术" items={result.dmScripts} />
         </div>
