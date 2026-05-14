@@ -1,0 +1,30 @@
+{
+  "name": "viral-copy-generator",
+  "private": true,
+  "version": "0.1.0",
+  "type": "module",
+  "scripts": {
+    "dev": "vite --host 0.0.0.0",
+    "build": "tsc --noEmit && vite build",
+    "preview": "vite preview --host 0.0.0.0",
+    "start": "tsx server/productionServer.ts"
+  },
+  "dependencies": {
+    "lucide-react": "^0.468.0",
+    "openai": "^6.37.0",
+    "react": "^19.2.6",
+    "react-dom": "^19.2.6",
+    "tsx": "^4.22.0"
+  },
+  "devDependencies": {
+    "@types/node": "^25.7.0",
+    "@types/react": "^19.2.7",
+    "@types/react-dom": "^19.2.3",
+    "@vitejs/plugin-react": "^5.1.2",
+    "typescript": "^5.7.2",
+    "vite": "^7.2.7"
+  },
+  "overrides": {
+    "rollup": "npm:@rollup/wasm-node@^4.60.3"
+  }
+}
