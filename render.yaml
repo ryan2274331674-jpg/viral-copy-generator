@@ -7,10 +7,10 @@ services:
     startCommand: npm start
     healthCheckPath: /health
     envVars:
-      - key: OPENAI_API_KEY
+      - key: DEEPSEEK_API_KEY
         sync: false
-      - key: OPENAI_MODEL
-        value: gpt-5.2
+      - key: DEEPSEEK_MODEL
+        value: deepseek-v4-flash
       - key: RATE_LIMIT_MAX
         value: "20"
       - key: RATE_LIMIT_WINDOW_MS
