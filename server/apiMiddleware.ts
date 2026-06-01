@@ -1,6 +1,6 @@
 import type { Connect, Plugin } from "vite";
 import { readJsonBody, sendJson } from "./httpHelpers";
-import { generateCopy, normalizePayload } from "./openaiGenerator";
+import { generateCopy, normalizePayload } from "./deepseekGenerator";
 import { checkRateLimit } from "./rateLimit";
 
 const handleGenerate: Connect.NextHandleFunction = async (request, response, next) => {
