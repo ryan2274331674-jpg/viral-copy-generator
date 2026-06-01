@@ -16,14 +16,14 @@ import type { FormState, GeneratedResult } from "./lib/copyGenerator";
 import { accountTypes, generateMockResult, platforms, styles } from "./lib/copyGenerator";
 
 type GenerationMeta = {
-  source: "openai" | "mock";
+  source: "deepseek" | "mock";
   model?: string;
   notice?: string;
 };
 
 type ApiGenerateResponse = {
   result: GeneratedResult;
-  source: "openai" | "mock";
+  source: "deepseek" | "mock";
   model?: string;
   notice?: string;
 };
@@ -191,7 +191,7 @@ export default function App() {
   const [result, setResult] = useState<GeneratedResult>(() => generateMockResult(form, 0));
   const [meta, setMeta] = useState<GenerationMeta>({
     source: "mock",
-    notice: "当前为本地模拟内容，配置 OPENAI_API_KEY 后会自动调用 API。",
+    notice: "当前为本地模拟内容，配置 DEEPSEEK_API_KEY 后会自动调用 DeepSeek API。",
   });
   const [isGenerating, setIsGenerating] = useState(false);
 
@@ -240,7 +240,7 @@ export default function App() {
     formatSection("私信转化话术", result.dmScripts),
   ].join("\n\n");
 
-  const statusLabel = isGenerating ? "生成中" : meta.source === "openai" ? meta.model || "OpenAI API" : "本地模拟";
+  const statusLabel = isGenerating ? "生成中" : meta.source === "deepseek" ? meta.model || "DeepSeek API" : "本地模拟";
 
   return (
     <main className="app-shell">
