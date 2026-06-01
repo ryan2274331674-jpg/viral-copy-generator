@@ -6,7 +6,7 @@ export default defineConfig(({ mode }) => {
   const env = loadEnv(mode, process.cwd(), "");
 
   for (const [key, value] of Object.entries(env)) {
-    if (key.startsWith("OPENAI_") && process.env[key] === undefined) {
+    if (key.startsWith("DEEPSEEK_") && process.env[key] === undefined) {
       process.env[key] = value;
     }
   }
