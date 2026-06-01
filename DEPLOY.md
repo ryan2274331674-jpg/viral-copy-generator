@@ -9,8 +9,8 @@
 5. 在 Environment Variables 中填写：
 
 ```bash
-OPENAI_API_KEY=你的 API Key
-OPENAI_MODEL=gpt-5.2
+DEEPSEEK_API_KEY=你的 DeepSeek API Key
+DEEPSEEK_MODEL=deepseek-v4-flash
 RATE_LIMIT_MAX=20
 RATE_LIMIT_WINDOW_MS=600000
 ```
@@ -40,8 +40,8 @@ docker build -t viral-copy-generator .
 
 ```bash
 docker run -p 3000:3000 \
-  -e OPENAI_API_KEY=你的 API Key \
-  -e OPENAI_MODEL=gpt-5.2 \
+  -e DEEPSEEK_API_KEY=你的 DeepSeek API Key \
+  -e DEEPSEEK_MODEL=deepseek-v4-flash \
   -e RATE_LIMIT_MAX=20 \
   -e RATE_LIMIT_WINDOW_MS=600000 \
   viral-copy-generator
@@ -56,6 +56,6 @@ http://localhost:3000
 ## 上线前检查
 
 - 不要把 `.env` 提交到 GitHub。
-- `OPENAI_API_KEY` 只放在部署平台环境变量里。
-- 公开给别人用之前，建议给 OpenAI 账户设置预算或额度提醒。
+- `DEEPSEEK_API_KEY` 只放在部署平台环境变量里。
+- 公开给别人用之前，建议给 DeepSeek 账户设置预算或额度提醒。
 - 如果访问量变大，把 `RATE_LIMIT_MAX` 调小，或者增加登录、付费、验证码等保护。
