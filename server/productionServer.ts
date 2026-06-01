@@ -4,7 +4,7 @@ import { createServer } from "node:http";
 import type { ServerResponse } from "node:http";
 import path from "node:path";
 import { readJsonBody, sendJson } from "./httpHelpers";
-import { generateCopy, normalizePayload } from "./openaiGenerator";
+import { generateCopy, normalizePayload } from "./deepseekGenerator";
 import { checkRateLimit } from "./rateLimit";
 
 const projectRoot = process.cwd();
@@ -57,7 +57,7 @@ const server = createServer(async (request, response) => {
     sendJson(response, 200, {
       ok: true,
       service: "viral-copy-generator",
-      hasOpenAIKey: Boolean(process.env.OPENAI_API_KEY),
+      hasDeepSeekKey: Boolean(process.env.DEEPSEEK_API_KEY),
     });
     return;
   }
