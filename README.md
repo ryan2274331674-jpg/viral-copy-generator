@@ -1,6 +1,6 @@
 # 短视频爆款文案生成器
 
-一个基于 React + Vite 的短视频文案生成器网页。已内置 `/api/generate` 本地后端接口，可接入 OpenAI API；没有配置 API Key 时会自动回退到本地假数据。
+一个基于 React + Vite 的短视频文案生成器网页。已内置 `/api/generate` 本地后端接口，可接入 DeepSeek API；没有配置 API Key 时会自动回退到本地假数据。
 
 ## 功能
 
@@ -13,10 +13,10 @@
 - 生成评论区引导话术 5 条
 - 生成私信转化话术 5 条
 - 支持单项复制、整组复制、重新生成
-- 支持 OpenAI API 结构化输出
+- 支持 DeepSeek API 真实生成
 - 未配置 API Key 时自动使用本地模拟结果
 
-## 接入 OpenAI API
+## 接入 DeepSeek API
 
 复制环境变量示例文件：
 
@@ -27,8 +27,8 @@ cp .env.example .env
 在 `.env` 中填入：
 
 ```bash
-OPENAI_API_KEY=你的 API Key
-OPENAI_MODEL=gpt-5.2
+DEEPSEEK_API_KEY=你的 DeepSeek API Key
+DEEPSEEK_MODEL=deepseek-v4-flash
 RATE_LIMIT_MAX=20
 RATE_LIMIT_WINDOW_MS=600000
 ```
@@ -75,11 +75,11 @@ npm start
 - Build Command: `npm install && npm run build`
 - Start Command: `npm start`
 - Environment Variables:
-  - `OPENAI_API_KEY`
-  - `OPENAI_MODEL`
+  - `DEEPSEEK_API_KEY`
+  - `DEEPSEEK_MODEL`
   - `RATE_LIMIT_MAX`
   - `RATE_LIMIT_WINDOW_MS`
 
-注意：不要把 `OPENAI_API_KEY` 写进前端代码，也不要提交到 GitHub。只放在云平台的环境变量里。
+注意：不要把 `DEEPSEEK_API_KEY` 写进前端代码，也不要提交到 GitHub。只放在云平台的环境变量里。
 
 更完整的部署步骤见 [DEPLOY.md](./DEPLOY.md)。项目也已包含 `render.yaml` 和 `Dockerfile`。
